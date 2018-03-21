@@ -4,8 +4,11 @@ import sys
 
 
 def next_words(pair_of_all_words, curW):
-    'Возращет следущее после cutWords слово(srt) которое надо вывести, либо кидает exception'
-    arr = [(i.split())[1] for i in pair_of_all_words if i.split()[0] == curW for j in range(int(i.split()[2]))]
+    """Возращет следущее после cutWords слово(srt) которое надо
+    вывести, либо кидает exception"""
+
+    arr = [(i.split())[1] for i in pair_of_all_words if i.split()[0] == curW
+           for j in range(int(i.split()[2]))]
     if len(arr) != 0:
         return random.choice(arr)
     else:
@@ -26,18 +29,17 @@ def generate_text(model, seed, length, finalTextFile):
         curW = next_words(pair_of_all_words, curW)
 
 
-parser = argparse.ArgumentParser(description='На основе модели составляет предложение')
+parser = argparse.ArgumentParser(description='Cоставляет предложение')
 
-parser.add_argument('--model', type=str, help='Путь к файлу, из которого загружается модель')
+parser.add_argument('--model', type=str, help='Путь для загрузки модели')
 parser.add_argument('--seed', type=str, help='НЕОБЯАТЕЛЬНО! Начальное слово')
 parser.add_argument('--length', type=int, help='Длина последовательности слов')
-parser.add_argument('--output',default='', type=str, help='Сюда выведется запрашиваемый текст')
+parser.add_argument('--output', default='', type=str, help='Вывод текста')
 
 args = parser.parse_args()
 
 with open(args.model, 'r') as file:
     if args.output == '':
-        #print(sys.stdout)
         generate_text(file, args.seed, args.length, sys.stdout)
     else:
         with open(args.output, 'w') as output:
