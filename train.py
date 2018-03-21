@@ -8,7 +8,7 @@ import re
 
 def parse_str(s):
     'Парсит строку'
-    return re.sub('[!—@#$:()%^+=?*[\].\n/,]', ' ', s)
+    return re.sub('[!—@#$:;()»%^+=?*[\].\n/,]', ' ', s)
 
 
 def to_lower(s):
