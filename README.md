@@ -1,3 +1,3 @@
 # Генератор текстов
-## [Материалы]
-(https://drive.google.com/open?id=12LFjXAmN97yMsEni7bCw0bb4Zprj2Ny6)
+## Материалы
+[Ссылка на тексты для обучения](https://drive.google.com/open?id=1hhU3HoljIiyO-2Bn0YtrFQqqi-Cw0MhF)
