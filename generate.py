@@ -9,8 +9,8 @@ def next_words(pair_of_all_words, curW):
     if len(arr) != 0:
         return random.choice(arr)
     else:
-        # Какое-то часто употрбляемое слово
-        return 'Привет'
+        # Если передали seed которого у нас нет
+        return random.choice(pair_of_all_words)
 
 
 def generate_text(model, seed, length, finalTextFile):
@@ -31,12 +31,13 @@ parser = argparse.ArgumentParser(description='На основе модели с�
 parser.add_argument('--model', type=str, help='Путь к файлу, из которого загружается модель')
 parser.add_argument('--seed', type=str, help='НЕОБЯАТЕЛЬНО! Начальное слово')
 parser.add_argument('--length', type=int, help='Длина последовательности слов')
-parser.add_argument('--output', type=str, help='Сюда выведется запрашиваемый текст')
+parser.add_argument('--output',default='', type=str, help='Сюда выведется запрашиваемый текст')
 
 args = parser.parse_args()
 
 with open(args.model, 'r') as file:
     if args.output == '':
+        #print(sys.stdout)
         generate_text(file, args.seed, args.length, sys.stdout)
     else:
         with open(args.output, 'w') as output:

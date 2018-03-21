@@ -5,9 +5,10 @@ import os
 import sys
 import re
 
+
 def parse_str(s):
     'Парсит строку'
-    return ' '.join(re.findall(r"[\w']+", re.sub('\d', ' ', s)))
+    return re.sub('[!—@#$:()%^+=?*[\].\n/,]', ' ', s)
 
 
 def to_lower(s):
@@ -32,28 +33,32 @@ def generate_words(input_dir, out, lc):
 
                 while line:
                     if line != '\n':
-                        if lc:
-                            line = line.lower()
+
                         if len(line) > 1:
+                            if lc:
+                                line = line.lower()
+
                             for i in [' '.join([i for i in (line.split())][j:j + 2])
                                       for j in range(len(line.split()) - 1)]:
                                 c[i] += 1
 
-                        last_word = give_last_word(line)
+                        last_word = parse_str(give_last_word(line))
                         if lc:
                             last_word = last_word.lower()
 
-                    line = file.readline()
-                    first_word = give_first_word(line)
+                    line = parse_str(file.readline())
+                    first_word = parse_str(give_first_word(line))
                     if lc:
                         first_word = first_word.lower()
-                    if give_first_word(line) != '':
+                    if first_word != '' and last_word != '':
                         c[parse_str((last_word + ' ' + first_word))] += 1
 
-    with open(out, 'w') as output:
-        for i in c:
-            print('{} {}'.format(i, c[i]), file=output)
-
+    if out != '':
+        with open(out, 'w') as output:
+            for i in c:
+                print('{} {}'.format(i, c[i]), file=output)
+    else:
+        print('{} {}'.format(i, c[i]))
 
 # _________________________________________MAIN________________________________________________
 parser = argparse.ArgumentParser(description='Укажите необхожимый параметр')
