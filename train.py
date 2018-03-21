@@ -38,7 +38,8 @@ def generate_words(input_dir, out, lc):
                             if lc:
                                 line = line.lower()
 
-                            for i in [' '.join([i for i in (line.split())][j:j + 2])
+                            for i in [' '.join([i for i
+                                                in (line.split())][j:j + 2])
                                       for j in range(len(line.split()) - 1)]:
                                 c[i] += 1
 
@@ -59,6 +60,7 @@ def generate_words(input_dir, out, lc):
                 print('{} {}'.format(i, c[i]), file=output)
     else:
         print('{} {}'.format(i, c[i]))
+
 
 # _________________________________________MAIN________________________________________________
 parser = argparse.ArgumentParser(description='Укажите необхожимый параметр')
