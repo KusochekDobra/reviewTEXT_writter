@@ -1,14 +1,14 @@
-import string
 import collections
 import argparse
 import os
 import sys
 import re
+#coding: utf-8
 
 
 def parse_str(s):
-    'Парсит строку'
-    return re.sub('[!—@#$:;()»%^+=?*[\].\n/,]', ' ', s)
+    'Парсит строку, выкидывая оттуда не алфавитные символы'
+    return re.sub('[–!—@#$:`€1234567890;()»%^+=?*[\].\n/,\-\"\r\']', ' ', s)
 
 
 def to_lower(s):
@@ -23,12 +23,21 @@ def give_first_word(s):
     return ''.join(re.findall(r'^\w+', s))
 
 
+def filepath_to_input_shape(input_dir):
+    'Функция возращает пути ко всем файлам-моделям'
+    path_f = []
+    for d, dirs, files in os.walk(input_dir):
+        for f in files:
+            if str(f).startswith('TextLearning'):
+                path = os.path.join(d, f)  # формирование адреса
+                path_f.append(path)  # добавление адреса в список
+    return path_f
+
+
 def generate_words(input_dir, out, lc):
     c = collections.Counter()
-
     for fileName in input_dir:
-        if fileName[:2] == 'in':
-            with open('mater/' + fileName, 'r') as file:
+            with open(fileName, 'r') as file:
                 line = parse_str(file.readline())
 
                 while line:
@@ -74,4 +83,4 @@ args = parser.parse_args()
 if args.input_dir == '':
     generate_words(sys.stdin, args.model, args.lc)
 else:
-    generate_words(os.listdir(args.input_dir), args.model, args.lc)
+    generate_words(filepath_to_input_shape(os.getcwd() + '\\' + args.input_dir), args.model, args.lc)
