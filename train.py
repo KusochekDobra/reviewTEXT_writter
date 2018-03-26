@@ -7,7 +7,6 @@ import re
 
 # coding: utf-8
 
-
 def parse_str(s):
     'Парсит строку, выкидывая оттуда не алфавитные символы'
     return re.sub('[–!—@#$:`€1234567890;()»%^+=?*[\].\n/,\-\"\r\']', ' ', s)
@@ -80,11 +79,12 @@ parser.add_argument('--model', default='mater\output.txt',
                     type=str, help='Путь к файлу в который загружается модель')
 parser.add_argument('--lc', default=False,
                     action='store_true', help='К нижнему подчеркиванию')
-parser.add_argument('--input_dir', default='',
+parser.add_argument('--input-dir', default='',
                     type=str, help='Дериктория текстов для обучения')
 
 args = parser.parse_args()
 if args.input_dir == '':
     generate_words(sys.stdin, args.model, args.lc)
 else:
-    generate_words(filepath_to_input_shape(os.getcwd() + '\\' + args.input_dir), args.model, args.lc)
+    generate_words(filepath_to_input_shape(
+        os.getcwd() + '\\' + args.input_dir), args.model, args.lc)
