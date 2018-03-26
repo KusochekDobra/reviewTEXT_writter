@@ -29,7 +29,6 @@ def filepath_to_input_shape(input_dir):
     path_f = []
     for d, dirs, files in os.walk(input_dir):
         for f in files:
-            if str(f).startswith('TextLearning'):
                 path = os.path.join(d, f)  # формирование адреса
                 path_f.append(path)  # добавление адреса в список
     return path_f
