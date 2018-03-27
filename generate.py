@@ -1,7 +1,8 @@
+# coding: utf-8
+
 import argparse
 import random
 import sys
-import string
 
 
 def next_words(pair_of_all_words, curW):
@@ -21,6 +22,7 @@ def next_words(pair_of_all_words, curW):
                 pair_of_all_words[random.randint(0, 1)]))[random.randint(0, 1)]
         else:
             # Выкидываем исключение если слова seed нет в списке
+            print(curW)
             raise ValueError('К сожалению такого слово в списках нет')
 
 
@@ -37,7 +39,7 @@ def generate_text(model, seed, length, finalTextFile):
         curW = next_words(pair_of_all_words, curW)
 
 
-parser = argparse.ArgumentParser(description='Cоставляет предложение')
+parser = argparse.ArgumentParser(description='Cоставляет текст')
 
 parser.add_argument('--model', type=str, help='Путь для загрузки модели')
 parser.add_argument('--seed', type=str, help='НЕОБЯАТЕЛЬНО! Начальное слово')
@@ -46,9 +48,9 @@ parser.add_argument('--output', default='', type=str, help='Вывод текс�
 
 args = parser.parse_args()
 
-with open(args.model, 'r') as file:
+with open(args.model, 'r', encoding="utf8") as file:
     if args.output == '':
         generate_text(file, args.seed, args.length, sys.stdout)
     else:
-        with open(args.output, 'w') as output:
+        with open(args.output, 'w', encoding="utf8") as output:
             generate_text(file, args.seed, args.length, output)
