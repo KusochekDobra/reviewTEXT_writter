@@ -1,6 +1,7 @@
 import argparse
 import random
 import sys
+import string
 
 
 def next_words(pair_of_all_words, curW):
@@ -12,12 +13,19 @@ def next_words(pair_of_all_words, curW):
     if len(arr) != 0:
         return random.choice(arr)
     else:
-        # Если передали seed которого у нас нет
-        return random.choice(pair_of_all_words)
+        # Если curW - поледнее слово в нашем списке то берем rand()
+        if (str.split(pair_of_all_words
+                      [len(pair_of_all_words) - 1]))[1] == curW:
+
+            return str.split(''.join(
+                pair_of_all_words[random.randint(0, 1)]))[random.randint(0, 1)]
+        else:
+            # Выкидываем исключение если слова seed нет в списке
+            raise ValueError('К сожалению такого слово в списках нет')
 
 
 def generate_text(model, seed, length, finalTextFile):
-    'Метод генерирующий словосочетания, на основе модели'
+    """Метод генерирующий словосочетания, на основе модели"""
     pair_of_all_words = model.readlines()
     if seed == '' or seed is None:
         seed = (random.choice(pair_of_all_words)).split()[0]
