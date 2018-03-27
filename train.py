@@ -42,6 +42,7 @@ def generate_words(input_dir, out, lc):
         with open(fileName, 'r', encoding="utf8") as file:
             line = parse_str(file.readline())
 
+            line.encode('utf-8').strip()
             while line:
                 if len(line) > 0:
                     if lc:
