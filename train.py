@@ -24,7 +24,7 @@ def give_first_word(s):
     return ''.join(re.findall(r'^\w+', s))
 
 
-def filepath_to_input_shape(input_dir):
+def filepath_to_good_shape(input_dir):
     """Функция возращает пути ко всем файлам-моделям"""
     path_f = []
     for d, dirs, files in os.walk(input_dir):
@@ -74,7 +74,7 @@ def generate_words(input_dir, out, lc):
 # _________________________________________MAIN________________________________________________
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--model', default='mater\output.txt',
+parser.add_argument('--model',
                     type=str, help='Путь к файлу в который загружается модель')
 parser.add_argument('--lc', default=False,
                     action='store_true', help='К нижнему подчеркиванию')
@@ -83,7 +83,12 @@ parser.add_argument('--input-dir', default='',
 
 args = parser.parse_args()
 if args.input_dir == '':
-    generate_words(sys.stdin, args.model, args.lc)
+
+    with open('additional_input', 'w') as add_input:
+        line = input()
+        while line != '':
+            add_input.write(line+'\n')
+            line = input()
+    generate_words(['additional_input'], args.model, args.lc)
 else:
-    generate_words(filepath_to_input_shape(
-        os.getcwd() + '\\' + args.input_dir), args.model, args.lc)
+    generate_words(filepath_to_good_shape(args.input_dir), args.model, args.lc)
