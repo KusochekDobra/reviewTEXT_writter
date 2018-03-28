@@ -37,18 +37,30 @@ def generate_text(model, seed, length, finalTextFile):
         curW = next_words(pair_of_all_words, curW)
 
 
-parser = argparse.ArgumentParser(description='Cоставляет текст')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description='Cоставляет текст')
 
-parser.add_argument('--model', type=str, help='Путь для загрузки модели')
-parser.add_argument('--seed', type=str, help='НЕОБЯАТЕЛЬНО! Начальное слово')
-parser.add_argument('--length', type=int, help='Длина последовательности слов')
-parser.add_argument('--output', default='', type=str, help='Вывод текста')
+    parser.add_argument('--model', type=str,
+                        help='Путь для загрузки модели')
+    parser.add_argument('--seed', type=str,
+                        help='НЕОБЯАТЕЛЬНО!'
+                             ' Начальное слово')
+    parser.add_argument('--length', type=int,
+                        help='Длина'
+                             ' последовательности слов')
+    parser.add_argument('--output', default='', type=str,
+                        help='Вывод текста')
 
-args = parser.parse_args()
+    args = parser.parse_args()
 
-with open(args.model, 'r', encoding="utf8") as file:
-    if args.output == '':
-        generate_text(file, args.seed, args.length, sys.stdout)
-    else:
-        with open(args.output, 'w', encoding="utf8") as output:
-            generate_text(file, args.seed, args.length, output)
+    with open(args.model, 'r', encoding="utf8") as file:
+        if args.output == '':
+            generate_text(file, args.seed, args.length, sys.stdout)
+        else:
+            with open(args.output, 'w', encoding="utf8") as output:
+                generate_text(file, args.seed, args.length, output)
+
+    print('\n')
+    print(' "{}" TEXT generation is'
+          ' completed successfully'.format(args.output))
