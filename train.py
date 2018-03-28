@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import collections
 import argparse
 import os
@@ -31,8 +29,10 @@ def filepath_to_good_shape(input_dir):
     path_f = []
     for d, dirs, files in os.walk(input_dir):
         for f in files:
-            path = os.path.join(d, f)  # формирование адреса
-            path_f.append(path)  # добавление адреса в список
+            #Считываем только txt файлы
+            if f[-4:] == '.txt':
+                path = os.path.join(d, f)  # формирование адреса
+                path_f.append(path)  # добавление адреса в список
     return path_f
 
 
@@ -42,7 +42,6 @@ def generate_words(input_dir, out, lc):
         with open(fileName, 'r', encoding="utf8") as file:
             line = parse_str(file.readline())
 
-            line.encode('utf-8').strip()
             while line:
                 if len(line) > 0:
                     if lc:
@@ -81,7 +80,8 @@ parser.add_argument('--model',
 parser.add_argument('--lc', default=False,
                     action='store_true', help='К нижнему подчеркиванию')
 parser.add_argument('--input-dir', default='',
-                    type=str, help='Дериктория текстов для обучения')
+                    type=str, help='Дериктория текстов для обучения'
+                                   '!ТОЛЬКО txt ФАЙЛЫ!')
 
 args = parser.parse_args()
 if args.input_dir == '':
@@ -95,4 +95,4 @@ if args.input_dir == '':
 else:
     generate_words(filepath_to_good_shape(args.input_dir), args.model, args.lc)
 
-print(' "{}.txt" generation is completed successfully'.format(args.model))
+print(' "{}" generation is completed successfully'.format(args.model))
