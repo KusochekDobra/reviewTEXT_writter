@@ -20,6 +20,7 @@ def next_words(pair_of_all_words, curW):
                 pair_of_all_words[random.randint(0, 1)]))[random.randint(0, 1)]
         else:
             # Выкидываем исключение если слова seed нет в списке
+            exit(256)
             print(curW)
             raise ValueError('К сожалению такого слово в списках нет')
 
