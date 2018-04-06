@@ -1,3 +1,16 @@
+"""
+Скрипт создаёт модель на основе текстов которые вы ему передали
+В ней отражено как часто за i словом следует j-ое:
+      Формат : СЛОВО1 _ СЛОВО2 _ кол-во
+
+Особенности программы(кратко):
+1) Для парсинга строки и получения последнего/первого слова
+    используем библиотеку re
+2) Кодировка UTF-8 т.к большинство текстов находяться именно в
+    этой кодировке
+3) Для подсчета частоты пар используем collections.Counter
+"""
+
 import collections
 import argparse
 import os
@@ -6,13 +19,7 @@ import re
 
 def parse_str(s):
     'Парсит строку, выкидывая оттуда не алфавитные символы'
-    return re.sub('[^a-zA-Zа-яА-Я]', '', s)
-
-
-
-
-def to_lower(s):
-    return ''.join(c for c in s.lower())
+    return re.sub('[^a-zA-Zа-яА-Я]', ' ', s)
 
 
 def give_last_word(s):
@@ -26,8 +33,8 @@ def give_first_word(s):
     return ''.join(re.findall(r'^\w+', s))
 
 
-def filepath_to_good_shape(input_dir):
-    """Функция возращает пути ко всем файлам-моделям"""
+def file_path_to_good_shape(input_dir):
+    'Функция возращает пути ко всем файлам-моделям'
     path_f = []
     for d, dirs, files in os.walk(input_dir):
         for f in files:  # Считываем только txt файлы
@@ -46,7 +53,7 @@ def generate_words(input_dir, out, lc):
             while line:
                 if len(line) > 0:
                     if lc:
-                        line = line.lower()
+                        line = ''.join(c for c in line.lower())
 
                     for i in [' '.join([i for i
                                         in (line.split())][j:j + 2])
@@ -95,7 +102,7 @@ if __name__ == "__main__":
                 line = input()
         generate_words(['additional_input'], args.model, args.lc)
     else:
-        generate_words(filepath_to_good_shape(args.input_dir),
+        generate_words(file_path_to_good_shape(args.input_dir),
                        args.model, args.lc)
 
     print(' "{}" generation is completed successfully'.format(args.model))
