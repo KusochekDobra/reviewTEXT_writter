@@ -8,6 +8,9 @@
     используем библиотеку re
 2) Кодировка UTF-8
 3) Для подсчета частоты пар используем collections.Counter
+
+@author: Подкидышев Алексей
+@email: alexp2019@gmail.com
 """
 
 import collections
