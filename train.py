@@ -108,4 +108,3 @@ if __name__ == "__main__":
                        args.model, args.lc)
 
     print(' "{}" generation is completed successfully'.format(args.model))
-
