@@ -39,8 +39,7 @@ def file_path_to_good_shape(input_dir):
     'Функция возращает пути ко всем файлам-моделям'
     path_f = []
     for d, dirs, files in os.walk(input_dir):
-        for f in files:  # Считываем только txt файлы
-            if f[-4:] == '.txt':
+        for f in files:
                 path = os.path.join(d, f)  # формирование адреса
                 path_f.append(path)  # добавление адреса в список
     return path_f
@@ -91,8 +90,7 @@ if __name__ == "__main__":
     parser.add_argument('--lc', default=False,
                         action='store_true', help='')
     parser.add_argument('--input-dir', default='',
-                        type=str, help='Дериктория текстов для обучения'
-                                       '!ТОЛЬКО txt ФАЙЛЫ!')
+                        type=str, help='Дериктория текстов для обучения')
 
     args = parser.parse_args()
     if args.input_dir == '':
