@@ -25,10 +25,7 @@ def parse_str(s):
 
 
 def give_last_word(s):
-    if len(s.split()) > 0:
-        return s.split()[-1]
-    else:
-        return ''
+    return ''.join(re.findall(r'\w+$', s))
 
 
 def give_first_word(s):
