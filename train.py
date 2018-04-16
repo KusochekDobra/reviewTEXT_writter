@@ -38,13 +38,14 @@ def give_first_word(s):
 def file_path_to_good_shape(input_dir):
     'Функция возращает пути ко всем файлам-моделям'
     path_f = []
-    [path_f.append(os.path.join(d, f)) for d, dirs, files
-     in os.walk(input_dir) for f in files]
+    [path_f.append(os.path.join(first_tuple_element, cur_file))
+     for first_tuple_element, dirs, files
+     in os.walk(input_dir) for cur_file in files]
     return path_f
 
 
 def generate_words(input_dir, out, lc):
-    c = collections.Counter()
+    counter = collections.Counter()
     for fileName in input_dir:
         with open(fileName, 'r', encoding="utf8") as file:
             line = parse_str(file.readline())
@@ -57,7 +58,7 @@ def generate_words(input_dir, out, lc):
                     for i in [' '.join([i for i
                                         in (line.split())][j:j + 2])
                               for j in range(len(line.split()) - 1)]:
-                        c[i] += 1
+                        counter[i] += 1
 
                 last_word = give_last_word(line)
 
@@ -69,14 +70,14 @@ def generate_words(input_dir, out, lc):
                         last_word = last_word.lower()
                         first_word = first_word.lower()
 
-                    c[parse_str((last_word + ' ' + first_word))] += 1
+                    counter[parse_str((last_word + ' ' + first_word))] += 1
 
     if out != '':
         with open(out, 'w', encoding="utf8") as output:
-            for i in c:
-                print('{} {}'.format(i, c[i]), file=output)
+            for i in counter:
+                print('{} {}'.format(i, counter[i]), file=output)
     else:
-        print('{} {}'.format(i, c[i]))
+        print('{} {}'.format(i, counter[i]))
 
 
 if __name__ == "__main__":
