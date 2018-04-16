@@ -38,10 +38,8 @@ def give_first_word(s):
 def file_path_to_good_shape(input_dir):
     'Функция возращает пути ко всем файлам-моделям'
     path_f = []
-    for d, dirs, files in os.walk(input_dir):
-        for f in files:
-                path = os.path.join(d, f)  # формирование адреса
-                path_f.append(path)  # добавление адреса в список
+    [path_f.append(os.path.join(d, f)) for d, dirs, files
+     in os.walk(input_dir) for f in files]
     return path_f
 
 
