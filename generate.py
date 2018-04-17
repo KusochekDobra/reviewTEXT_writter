@@ -33,7 +33,8 @@ def next_words(pair_of_all_words, curW):
     if len(arr) != 0:
         return random.choice(arr)
     else:
-        # Если curW - поледнее слово в нашем списке то след. слово берем рандомно
+        # Если curW - поледнее слово в нашем списке,
+        #  то след. слово берем рандомно
         if (str.split(pair_of_all_words
                       [len(pair_of_all_words) - 1]))[1] == curW:
 
@@ -52,6 +53,7 @@ def generate_text(model, seed, length, finalTextFile):
     if seed == '' or seed is None:
         seed = (random.choice(pair_of_all_words)).split()[0]
 
+    'Изначально curW == seed'
     curW = seed
 
     for i in range(length):
