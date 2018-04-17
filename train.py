@@ -52,10 +52,11 @@ def generate_words(input_dir, out, lc):
                     if lc:
                         line = ''.join(c for c in line.lower())
 
-                    for i in [' '.join([i for i
-                                        in (line.split())][j:j + 2])
-                              for j in range(len(line.split()) - 1)]:
-                        counter[i] += 1
+                allWords = line.split()
+                counter += collections.Counter([' '.join([i for i in allWords]
+                                                         [j:j + 2])
+                                                for j in range(
+                        len(allWords) - 1)])
 
                 last_word = give_last_word(line)
 
