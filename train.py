@@ -34,7 +34,11 @@ def give_first_word(s):
 
 
 def file_path_to_good_shape(input_dir):
-    'Функция возращает пути ко всем файлам-моделям'
+    """Функция ищет все файлы в директории
+    :param input_dir: Директория в котором лежат файлы для
+    обучения
+    :return path_f: список имен файлов
+    """
     path_f = []
     [path_f.append(os.path.join(first_tuple_element, cur_file))
      for first_tuple_element, dirs, files
@@ -43,6 +47,12 @@ def file_path_to_good_shape(input_dir):
 
 
 def generate_words(file, lc):
+    """Функция ищет все файлы в директории
+    :param file, lc: файл из которого считываем пары,
+    нужно ли приводить строку к lc
+    :return counter: counter содержащий пары слов и их частоту
+    повторений в тексте
+    """
     counter = collections.Counter()
     line = parse_str(file.readline())
 
