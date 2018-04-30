@@ -34,10 +34,11 @@ def next_words(pair_of_all_words, curW):
                     начальное слово
     """
 
-    arr = [(i.split())[1] for i in pair_of_all_words if i.split()[0] == curW
-           for j in range(int(i.split()[2]))]
-    if len(arr) != 0:
-        return random.choice(arr)
+    helps_array = [(i.split())[1] for i in pair_of_all_words
+                   if i.split()[0] == curW
+                   for j in range(int(i.split()[2]))]
+    if len(helps_array) != 0:
+        return random.choice(helps_array)
     else:
         # Если curW - поледнее слово в нашем списке,
         #  то след. слово берем рандомно
