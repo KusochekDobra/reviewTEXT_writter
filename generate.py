@@ -25,8 +25,14 @@ import sys
 
 
 def next_words(pair_of_all_words, curW):
-    """Находит следующее после curW слово,
-     но если нач. слова нет - кидает exeption"""
+    """Находит следующее после curW слово
+    :param pair_of_all_words: все пары слов
+    :param  curW: текущее слово
+
+    :return: следущее словоы=
+    :raise: ValueError, если подано несущесвтующее
+                    начальное слово
+    """
 
     arr = [(i.split())[1] for i in pair_of_all_words if i.split()[0] == curW
            for j in range(int(i.split()[2]))]
@@ -53,7 +59,6 @@ def generate_text(model, seed, length, finalTextFile):
     if seed == '' or seed is None:
         seed = (random.choice(pair_of_all_words)).split()[0]
 
-    'Изначально curW == seed'
     curW = seed
 
     for i in range(length):
