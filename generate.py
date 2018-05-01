@@ -26,17 +26,20 @@ import sys
 
 def next_words(pair_of_all_words, curW):
     """Находит следующее после curW слово
-    :param pair_of_all_words: все пары слов
+    :param pair_of_all_words: все пары слов и частоты,
+    хранимые в списке
     :param  curW: текущее слово
 
     :return: следущее словоы=
     :raise: ValueError, если подано несущесвтующее
                     начальное слово
     """
+    helps_array = []
+    for i in pair_of_all_words:
+        line = i.split()
+        if line[0] == curW:
+            [helps_array.append(line[1]) for j in range(int(line[2]))]
 
-    helps_array = [(i.split())[1] for i in pair_of_all_words
-                   if i.split()[0] == curW
-                   for j in range(int(i.split()[2]))]
     if len(helps_array) != 0:
         return random.choice(helps_array)
     else:
