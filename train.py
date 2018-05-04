@@ -18,6 +18,7 @@ import argparse
 import os
 import re
 import sys
+import json
 
 
 def parse_str(s):
@@ -39,11 +40,11 @@ def file_path_to_good_shape(input_dir):
     обучения
     :return path_f: список имен файлов
     """
-    path_f = []
-    [path_f.append(os.path.join(first_tuple_element, cur_file))
+    path_files = []
+    [path_files.append(os.path.join(first_tuple_element, cur_file))
      for first_tuple_element, dirs, files
      in os.walk(input_dir) for cur_file in files]
-    return path_f
+    return path_files
 
 
 def generate_words(file, lc):
@@ -61,11 +62,9 @@ def generate_words(file, lc):
             if lc:
                 line = ''.join(c for c in line.lower())
 
-        allWords = line.split()
-        counter += collections.Counter([' '.join([i for i in allWords]
-                                                 [j:j + 2])
-                                        for j in range(
-                len(allWords) - 1)])
+        all_words = line.split()
+        counter += collections.Counter([' '.join(all_words[j:j + 2])
+                                        for j in range(len(all_words) - 1)])
 
         last_word = give_last_word(line)
 
@@ -108,9 +107,8 @@ if __name__ == "__main__":
     out = args.model
 
     if out != '':
-        with open(out, 'w', encoding="utf8") as output:
-            for i in counter:
-                print('{} {}'.format(i, counter[i]), file=output)
+        with open(out, 'w', encoding='utf-8') as file:
+            json.dump(counter, file)
     else:
         for i in counter:
             print('{} {}'.format(i, counter[i]))
