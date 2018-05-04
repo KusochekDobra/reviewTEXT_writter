@@ -21,13 +21,12 @@ import sys
 import json
 
 
-def parse_str(s):
+def parse_str(s, parse_const):
     'Парсит строку, выкидывая оттуда не алфавитные символы'
-    return re.sub('[^a-zA-Zа-яА-Я]', ' ', s)
-
-def parse_str2(s):
-    'Парсит строку, выкидывая оттуда не алфавитные символы'
-    return re.sub('[^a-zA-Zа-яА-Я,]', '', s)
+    if parse_const == 0:
+        return re.sub('[^a-zA-Zа-яА-Я]', ' ', s)
+    if parse_const == 1:
+        return re.sub('[^a-zA-Zа-яА-Я ]', '', s).replace(',', ' ')
 
 
 def give_last_word(s):
@@ -59,19 +58,19 @@ def generate_words(file, lc):
     повторений в тексте
     """
     counter = collections.Counter()
-    line = parse_str(file.readline())
+    line = parse_str(file.readline(), 0)
     while line:
         if len(line) > 0:
             if lc:
                 line = ''.join(c for c in line.lower())
 
-        counter += collections.Counter([parse_str2(str(i)).replace(',', ' ') for i in
+        counter += collections.Counter([parse_str(str(i), 1) for i in
                                         zip(str(line[:-1]).replace(' ', ''),
                                             str(line[1:]).replace(' ', ''))])
 
         last_word = give_last_word(line)
 
-        line = parse_str(file.readline())
+        line = parse_str(file.readline(), 0)
         first_word = give_first_word(line)
 
         if first_word != '' and last_word != '':
@@ -79,7 +78,7 @@ def generate_words(file, lc):
                 last_word = last_word.lower()
                 first_word = first_word.lower()
 
-            counter[parse_str((last_word + ' ' + first_word))] += 1
+            counter[parse_str((last_word + ' ' + first_word), 0)] += 1
 
     return counter
 
@@ -108,7 +107,6 @@ if __name__ == "__main__":
                 counter += generate_words(file, args.lc)
 
     out = args.model
-    print(counter)
     if out != '':
         with open(out, 'w', encoding='utf-8') as file:
             json.dump(counter, file)
