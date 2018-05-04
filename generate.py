@@ -22,52 +22,45 @@ model: а б - 2,  а в - 2
 import argparse
 import random
 import sys
+import json
 
 
-def next_words(pair_of_all_words, curW):
+def next_words(dic_of_all_words, curW):
     """Находит следующее после curW слово
-    :param pair_of_all_words: все пары слов и частоты,
+    :param dic_of_all_words: все пары слов и частоты,
     хранимые в списке
     :param  curW: текущее слово
 
-    :return: следущее словоы=
+    :return: следущее слово
     :raise: ValueError, если подано несущесвтующее
                     начальное слово
     """
     helps_array = []
-    for i in pair_of_all_words:
-        line = i.split()
-        if line[0] == curW:
-            [helps_array.append(line[1]) for j in range(int(line[2]))]
+    for i in dic_of_all_words:
+        pair = str(i).split()
+        if pair[0] == curW:
+            [helps_array.append(pair[1]) for j in range(dic_of_all_words[i])]
 
     if len(helps_array) != 0:
         return random.choice(helps_array)
     else:
-        # Если curW - поледнее слово в нашем списке,
-        #  то след. слово берем рандомно
-        if (str.split(pair_of_all_words
-                      [len(pair_of_all_words) - 1]))[1] == curW:
-
-            return str.split(''.join(
-                pair_of_all_words[random.randint(0, 1)]))[random.randint(0, 1)]
-        else:
-            # Выкидываем исключение если начального слова нет в списке
-            exit(256)
-            print(curW)
-            raise ValueError('К сожалению такого слово в списках нет')
+        # Если след. слова нет в модели, генерируем случайное
+        return str(random.choice(list(dic_of_all_words)))
+        # exit(256)
 
 
 def generate_text(model, seed, length, finalTextFile):
+    dic_of_all_words = dict(json.load(model))
     'Метод генерирующий словосочетания, на основе модели'
-    pair_of_all_words = model.readlines()
+
     if seed == '' or seed is None:
-        seed = (random.choice(pair_of_all_words)).split()[0]
+        seed = str(random.choice(list(dic_of_all_words)))
 
     curW = seed
 
     for i in range(length):
         finalTextFile.write(curW + ' ')
-        curW = next_words(pair_of_all_words, curW)
+        curW = next_words(dic_of_all_words, curW)
 
 
 if __name__ == "__main__":
@@ -82,16 +75,16 @@ if __name__ == "__main__":
     parser.add_argument('--length', type=int,
                         help='Длина'
                              ' последовательности слов')
-    parser.add_argument('--output', default='', type=str,
+    parser.add_argument('--output', default='sys.stdout', type=str,
                         help='Вывод текста')
 
     args = parser.parse_args()
 
     with open(args.model, 'r', encoding="utf8") as file:
-        if args.output == '':
+        if args.output == 'sys.stdout':
             generate_text(file, args.seed, args.length, sys.stdout)
         else:
-            with open(args.output, 'w', encoding="utf8") as output:
+            with open(args.output, 'w') as output:
                 generate_text(file, args.seed, args.length, output)
 
     print('\n')
