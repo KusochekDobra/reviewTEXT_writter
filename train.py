@@ -25,6 +25,10 @@ def parse_str(s):
     'Парсит строку, выкидывая оттуда не алфавитные символы'
     return re.sub('[^a-zA-Zа-яА-Я]', ' ', s)
 
+def parse_str2(s):
+    'Парсит строку, выкидывая оттуда не алфавитные символы'
+    return re.sub('[^a-zA-Zа-яА-Я,]', '', s)
+
 
 def give_last_word(s):
     return ''.join(re.findall(r'\w+$', s))
@@ -56,15 +60,14 @@ def generate_words(file, lc):
     """
     counter = collections.Counter()
     line = parse_str(file.readline())
-
     while line:
         if len(line) > 0:
             if lc:
                 line = ''.join(c for c in line.lower())
 
-        all_words = line.split()
-        counter += collections.Counter([' '.join(all_words[j:j + 2])
-                                        for j in range(len(all_words) - 1)])
+        counter += collections.Counter([parse_str2(str(i)).replace(',', ' ') for i in
+                                        zip(str(line[:-1]).replace(' ', ''),
+                                            str(line[1:]).replace(' ', ''))])
 
         last_word = give_last_word(line)
 
@@ -105,7 +108,7 @@ if __name__ == "__main__":
                 counter += generate_words(file, args.lc)
 
     out = args.model
-
+    print(counter)
     if out != '':
         with open(out, 'w', encoding='utf-8') as file:
             json.dump(counter, file)
