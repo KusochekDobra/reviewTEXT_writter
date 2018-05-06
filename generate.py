@@ -26,7 +26,10 @@ import json
 
 
 def next_words(dic_of_all_words, cur_w):
-    """Находит следующее после cur_w слово
+    """
+    Находит следующее после cur_w слово
+
+
     :param dic_of_all_words: все пары слов и частоты,
     хранимые в списке
     :param  cur_w: текущее слово
@@ -50,8 +53,9 @@ def next_words(dic_of_all_words, cur_w):
 
 
 def generate_text(model, seed, length, finalTextFile):
-    dic_of_all_words = dict(json.load(model))
     'Метод генерирующий словосочетания, на основе модели'
+
+    dic_of_all_words = dict(json.load(model))
 
     if seed == '' or seed is None:
         seed = str(random.choice(list(dic_of_all_words)))
