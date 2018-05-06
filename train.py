@@ -38,7 +38,10 @@ def give_first_word(s):
 
 
 def file_path_to_good_shape(input_dir):
-    """Функция ищет все файлы в директории
+    """
+    Функция ищет все файлы в директории
+
+    Keyword arguments:
     :param input_dir: Директория в котором лежат файлы для
     обучения
     :return path_f: список имен файлов
@@ -51,7 +54,10 @@ def file_path_to_good_shape(input_dir):
 
 
 def generate_words(file, lc):
-    """Функция ищет все файлы в директории
+    """
+    Функция генерирует модель(Записывает Counter в файл
+    при помощи библиотеки json)
+
     :param file, lc: файл из которого считываем пары,
     нужно ли приводить строку к lc
     :return counter: counter содержащий пары слов и их частоту
@@ -59,10 +65,11 @@ def generate_words(file, lc):
     """
     counter = collections.Counter()
     line = parse_str(file.readline(), 0)
+
     while line:
         if len(line) > 0:
             if lc:
-                line = ''.join(c for c in line.lower())
+                line = line.lower()
 
         counter += collections.Counter([parse_str(str(i), 1) for i in
                                         zip(str(line[:-1]).replace(' ', ''),
@@ -79,7 +86,6 @@ def generate_words(file, lc):
                 first_word = first_word.lower()
 
             counter[parse_str((last_word + ' ' + first_word), 0)] += 1
-
     return counter
 
 
