@@ -85,10 +85,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.length is None:
-        print("Введите значение параметра length")
-        raise ValueError
-
     with open(args.model, 'r', encoding="utf8") as file:
         if args.output == 'sys.stdout':
             generate_text(file, args.seed, args.length, sys.stdout)
