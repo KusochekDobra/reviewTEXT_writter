@@ -25,11 +25,11 @@ import sys
 import json
 
 
-def next_words(dic_of_all_words, curW):
-    """Находит следующее после curW слово
+def next_words(dic_of_all_words, cur_w):
+    """Находит следующее после cur_w слово
     :param dic_of_all_words: все пары слов и частоты,
     хранимые в списке
-    :param  curW: текущее слово
+    :param  cur_w: текущее слово
 
     :return: следущее слово
     :raise: ValueError, если подано несущесвтующее
@@ -38,7 +38,7 @@ def next_words(dic_of_all_words, curW):
     helps_array = []
     for i in dic_of_all_words:
         pair = str(i).split()
-        if pair[0] == curW:
+        if pair[0] == cur_w:
             [helps_array.append(pair[1]) for j in range(dic_of_all_words[i])]
 
     if len(helps_array) != 0:
@@ -56,11 +56,11 @@ def generate_text(model, seed, length, finalTextFile):
     if seed == '' or seed is None:
         seed = str(random.choice(list(dic_of_all_words)))
 
-    curW = seed
+    cur_w = seed
 
     for i in range(length):
-        finalTextFile.write(curW + ' ')
-        curW = next_words(dic_of_all_words, curW)
+        finalTextFile.write(cur_w + ' ')
+        cur_w = next_words(dic_of_all_words, cur_w)
 
 
 if __name__ == "__main__":
