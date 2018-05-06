@@ -111,7 +111,6 @@ if __name__ == "__main__":
         with open(out, 'w', encoding='utf-8') as file:
             json.dump(counter, file)
     else:
-        for i in counter:
-            print('{} {}'.format(i, counter[i]))
+        raise ValueError("Введите путь для model")
 
     print(' "{}" generation is completed successfully'.format(args.model))
