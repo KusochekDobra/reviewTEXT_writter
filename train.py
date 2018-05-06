@@ -30,11 +30,7 @@ def parse_str(s, parse_const):
 
 
 def give_last_word(s):
-    return ''.join(re.findall(r'\w+$', s))
-
-
-def give_first_word(s):
-    return ''.join(re.findall(r'^\w+', s))
+    return s.rsplit(None, 1)[-1]
 
 
 def file_path_to_good_shape(input_dir):
@@ -64,9 +60,10 @@ def generate_words(file, lc):
     повторений в тексте
     """
     counter = collections.Counter()
-    line = parse_str(file.readline(), 0)
 
-    while line:
+    last_word = ''
+    for line in file:
+        line = last_word + parse_str(line, 0)
         if len(line) > 0:
             if lc:
                 line = line.lower()
@@ -77,15 +74,9 @@ def generate_words(file, lc):
 
         last_word = give_last_word(line)
 
-        line = parse_str(file.readline(), 0)
-        first_word = give_first_word(line)
+        if lc:
+            last_word = last_word.lower()
 
-        if first_word != '' and last_word != '':
-            if lc:
-                last_word = last_word.lower()
-                first_word = first_word.lower()
-
-            counter[parse_str((last_word + ' ' + first_word), 0)] += 1
     return counter
 
 
