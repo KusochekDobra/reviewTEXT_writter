@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--model',
                         type=str, help='Путь к файлу,'
-                                       ' в который загружается модель')
+                                       ' в который загружается модель', required=True)
     parser.add_argument('--lc', default=False,
                         action='store_true', help='')
     parser.add_argument('--input-dir', default='',
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     counter = collections.Counter()
 
     if args.input_dir == '':
-        # Для того, чтобы оставновить ввод, тыкаейте CTRL + Z
+        # Для того, чтобы оставновить ввод, комбинация CTRL + Z
         counter += generate_words(sys.stdin, args.lc)
     else:
         for i in file_path_to_good_shape(args.input_dir):
@@ -116,7 +116,5 @@ if __name__ == "__main__":
     if out != '':
         with open(out, 'w', encoding='utf-8') as file:
             json.dump(counter, file)
-    else:
-        raise ValueError("Введите путь для model")
 
     print(' "{}" generation is completed successfully'.format(args.model))
