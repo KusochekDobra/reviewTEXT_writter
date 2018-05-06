@@ -72,11 +72,12 @@ if __name__ == "__main__":
         description='Cоставляет текст')
 
     parser.add_argument('--model', type=str,
-                        help='Путь для загрузки модели')
+                        help='Путь для загрузки модели',
+                        required=True)
     parser.add_argument('--seed', type=str,
                         help='НЕОБЯАТЕЛЬНО!'
                              ' Начальное слово')
-    parser.add_argument('--length', type=int,
+    parser.add_argument('--length', type=int, required=True,
                         help='Длина'
                              ' последовательности слов')
     parser.add_argument('--output', default='sys.stdout', type=str,
