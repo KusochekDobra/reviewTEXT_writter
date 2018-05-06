@@ -69,14 +69,13 @@ def generate_text(model, seed, length, finalTextFile):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='Cоставляет текст')
+        description='Cоставляет текст на основе модели')
 
     parser.add_argument('--model', type=str,
                         help='Путь для загрузки модели',
                         required=True)
     parser.add_argument('--seed', type=str,
-                        help='НЕОБЯАТЕЛЬНО!'
-                             ' Начальное слово')
+                        help='Начальное слово')
     parser.add_argument('--length', type=int, required=True,
                         help='Длина'
                              ' последовательности слов')
