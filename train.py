@@ -19,6 +19,7 @@ import os
 import re
 import sys
 import json
+from collections import defaultdict
 
 
 def parse_str(s, parse_const):
@@ -49,6 +50,14 @@ def file_path_to_good_shape(input_dir):
     return path_files
 
 
+def crate_dic_from_Counter(counter):
+    res_dict = defaultdict(lambda: defaultdict(int))
+
+    for (word1, word2), num in counter.items():
+        res_dict[word1][word2] = num
+    return res_dict
+
+
 def generate_words(file, lc):
     """
     Функция генерирует модель(Записывает Counter в файл
@@ -59,8 +68,9 @@ def generate_words(file, lc):
     :return counter: counter содержащий пары слов и их частоту
     повторений в тексте
     """
-    counter = collections.Counter()
 
+    counter = collections.Counter()
+    counter[0, 0] = 0
     last_word = ''
     for line in file:
         line = last_word + parse_str(line, 0)
@@ -68,10 +78,15 @@ def generate_words(file, lc):
             if lc:
                 line = line.lower()
 
-        counter += collections.Counter([parse_str(str(i), 1) for i in
-                                        zip(str(line[:-1]).replace(' ', ''),
-                                            str(line[1:]).replace(' ', ''))])
+        # counter += collections.Counter([parse_str(str(i), 1) for i in
+        #                                 zip(str(line[:-1]).replace(' ', ''),
+        #                                     str(line[1:]).replace(' ', ''))])
+        # counter += collections.Counter([i for i in
+        #                                 zip(str(line[:-1]).replace(' ', ''),
+        #                                     str(line[1:]).replace(' ', ''))])
 
+        counter.update(zip(str(line[:-1]).replace(' ', ''),
+                           str(line[1:]).replace(' ', '')))
         last_word = give_last_word(line)
 
         if lc:
@@ -106,6 +121,7 @@ if __name__ == "__main__":
     out = args.model
     if out != '':
         with open(out, 'w', encoding='utf-8') as file:
-            json.dump(counter, file)
+            print(crate_dic_from_Counter(counter))
+            json.dump(crate_dic_from_Counter(counter), file)
 
     print(' "{}" generation is completed successfully'.format(args.model))
