@@ -90,6 +90,5 @@ if __name__ == "__main__":
             with open(args.output, 'w', encoding="utf8") as output:
                 generate_text(file, args.seed, args.length, output)
 
-    print('\n')
     print(' "{}" TEXT generation is'
           ' completed successfully'.format(args.output))
