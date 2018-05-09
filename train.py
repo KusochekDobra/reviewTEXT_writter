@@ -115,7 +115,6 @@ if __name__ == "__main__":
     out = args.model
     if out != '':
         with open(out, 'w', encoding='utf-8') as file:
-            print(crate_dic_from_Counter(counter))
             json.dump(crate_dic_from_Counter(counter), file)
 
     print(' "{}" generation is completed successfully'.format(args.model))
