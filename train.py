@@ -78,13 +78,6 @@ def generate_words(file, lc):
             if lc:
                 line = line.lower()
 
-        # counter += collections.Counter([parse_str(str(i), 1) for i in
-        #                                 zip(str(line[:-1]).replace(' ', ''),
-        #                                     str(line[1:]).replace(' ', ''))])
-        # counter += collections.Counter([i for i in
-        #                                 zip(str(line[:-1]).replace(' ', ''),
-        #                                     str(line[1:]).replace(' ', ''))])
-
         counter.update(zip(str(line[:-1]).replace(' ', ''),
                            str(line[1:]).replace(' ', '')))
         last_word = give_last_word(line)
@@ -100,7 +93,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--model',
                         type=str, help='Путь к файлу,'
-                                       ' в который загружается модель', required=True)
+                                       ' в который загружается модель',
+                        required=True)
     parser.add_argument('--lc', default=False,
                         action='store_true', help='')
     parser.add_argument('--input-dir', default='',
