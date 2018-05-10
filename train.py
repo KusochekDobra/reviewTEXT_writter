@@ -22,12 +22,9 @@ import json
 from collections import defaultdict
 
 
-def parse_str(s, parse_const):
+def parse_str(s):
     'Парсит строку, выкидывая оттуда не алфавитные символы'
-    if parse_const == 0:
-        return re.sub('[^a-zA-Zа-яА-Я]', ' ', s)
-    if parse_const == 1:
-        return re.sub('[^a-zA-Zа-яА-Я ]', '', s).replace(',', ' ')
+    return re.sub('[^a-zA-Zа-яА-Я]', ' ', s)
 
 
 def give_last_word(s):
@@ -73,7 +70,7 @@ def generate_words(file, lc):
     counter[0, 0] = 0
     last_word = ''
     for line in file:
-        line = last_word + parse_str(line, 0)
+        line = last_word + parse_str(line)
         if len(line) > 0:
             if lc:
                 line = line.lower()
