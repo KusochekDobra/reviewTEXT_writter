@@ -46,7 +46,10 @@ def next_words(dic_of_all_words, cur_w):
              for k in range(dic_of_all_words[i][j])]
             return random.choice(helps_array)
 
+    if cur_w == args.seed:
+        raise ValueError('seed does not exist')
     # Если след. слова нет в модели, генерируем случайное
+
     return str(random.choice(list(dic_of_all_words)))
     # exit(256)
 
@@ -90,5 +93,6 @@ if __name__ == "__main__":
             with open(args.output, 'w', encoding="utf8") as output:
                 generate_text(file, args.seed, args.length, output)
 
+    print('\n')
     print(' "{}" TEXT generation is'
           ' completed successfully'.format(args.output))
