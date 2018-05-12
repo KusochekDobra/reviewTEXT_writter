@@ -81,9 +81,6 @@ def generate_words(file, lc):
 
         last_word = give_last_word(line)
 
-        if lc:
-            last_word = last_word.lower()
-
     return counter
 
 
