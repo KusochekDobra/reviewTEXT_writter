@@ -67,16 +67,18 @@ def generate_words(file, lc):
     """
 
     counter = collections.Counter()
-    counter[0, 0] = 0
-    last_word = ''
+
+    last_word = ' '
     for line in file:
-        line = last_word + parse_str(line)
+
+        line = last_word + ' ' + parse_str(line)
+
         if len(line) > 0:
             if lc:
                 line = line.lower()
 
-        counter.update(zip(str(line[:-1]).replace(' ', ''),
-                           str(line[1:]).replace(' ', '')))
+        counter.update(zip(line.split()[:-1], line.split()[1:]))
+
         last_word = give_last_word(line)
 
         if lc:
